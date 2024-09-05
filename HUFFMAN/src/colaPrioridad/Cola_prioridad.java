@@ -3,7 +3,7 @@ package colaPrioridad;
 public class Cola_prioridad{
 	
 	private class NodoPrioridad{
-		int info;
+		Object info;
 		int prioridad;
 		NodoPrioridad sig;
 	}
@@ -15,7 +15,7 @@ public class Cola_prioridad{
         mayorPrioridad = null;
     }
 
-    public void AcolarPrioridad(int x, int prioridad) {
+    public void AcolarPrioridad(Object x, int prioridad) {
         // Crea el nuevo nodo que se va a acolar
         NodoPrioridad nuevo = new NodoPrioridad();
         nuevo.info = x;
@@ -23,7 +23,7 @@ public class Cola_prioridad{
 
         // Si la cola está vacía o el nuevo nodo tiene mayor prioridad
         // que el primero, lo inserta al principio
-        if (mayorPrioridad == null || prioridad > mayorPrioridad.prioridad) {
+        if (mayorPrioridad == null || prioridad < mayorPrioridad.prioridad) {
             nuevo.sig = mayorPrioridad;
             mayorPrioridad = nuevo;
         } else {
@@ -31,7 +31,7 @@ public class Cola_prioridad{
             NodoPrioridad aux = mayorPrioridad;
             
             // Busca la posición correcta según la prioridad
-            while (aux.sig != null && aux.sig.prioridad >= prioridad) {
+            while (aux.sig != null && aux.sig.prioridad <= prioridad) {
                 aux = aux.sig;
             }
             
@@ -46,7 +46,7 @@ public class Cola_prioridad{
         mayorPrioridad = mayorPrioridad.sig;
     }
 
-    public int Primero() {
+    public Object Primero() {
         // Devuelve la información del nodo con mayor prioridad
         return mayorPrioridad.info;
     }
@@ -59,5 +59,19 @@ public class Cola_prioridad{
     public int Prioridad() {
         // Devuelve la prioridad del nodo con mayor prioridad
         return mayorPrioridad.prioridad;
+    }
+    
+    public void print() {
+    	NodoPrioridad aux = mayorPrioridad;
+    	if(this.ColaVacia()) {
+    		System.out.println("Error al mostrar, la cola está vacía");
+    		return;
+    	}
+    	while (aux != null) {
+    		System.out.println("------------");
+    		System.out.println("Valor:"+aux.info+ " - Prioridad:"+aux.prioridad);
+    		aux = aux.sig;
+    	}
+    	System.out.println("------------");
     }
 }
